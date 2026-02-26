@@ -1,0 +1,139 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── CSS Variables ──────────────────────────────────────── */
+:root {
+  --font-bebas:    'Bebas Neue';
+  --font-playfair: 'Playfair Display';
+  --font-dm-sans:  'DM Sans';
+}
+
+/* ─── Base ───────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+  background-color: #06060e;
+  color: #ede9fe;
+  overflow-x: hidden;
+  min-height: 100dvh;
+}
+
+/* Cinematic ambient glow behind everything */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 100% 55% at 10% -8%,  rgba(109,40,217,0.18) 0%, transparent 50%),
+    radial-gradient(ellipse 70%  45% at 90% 105%, rgba(45,212,191,0.08) 0%, transparent 55%),
+    radial-gradient(ellipse 55%  35% at 55% 55%,  rgba(109,40,217,0.05) 0%, transparent 65%);
+}
+
+/* Film grain overlay */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.022;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar        { width: 5px; height: 4px; }
+::-webkit-scrollbar-track  { background: transparent; }
+::-webkit-scrollbar-thumb  { background: #1c1c35; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #8b5cf6; }
+
+/* ─── Utility layers ─────────────────────────────────────── */
+@layer utilities {
+  /* Horizontal scroll snap */
+  .scroll-x-snap {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .snap-start { scroll-snap-align: start; }
+
+  /* Thin scrollbar for horizontal rows */
+  .scrollbar-thin::-webkit-scrollbar { height: 3px; }
+  .scrollbar-thin::-webkit-scrollbar-thumb { background: #1c1c35; border-radius: 2px; }
+
+  /* Skeleton shimmer */
+  .skeleton {
+    background: linear-gradient(
+      110deg,
+      #1c1c35 8%,
+      rgba(255,255,255,0.055) 18%,
+      #1c1c35 33%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.6s linear infinite;
+  }
+
+  /* Glass panel */
+  .glass {
+    background: rgba(6,6,14,0.88);
+    backdrop-filter: blur(28px) saturate(170%);
+    -webkit-backdrop-filter: blur(28px) saturate(170%);
+  }
+
+  /* Violet accent bar (before pseudo) — used via JS classname */
+  .section-title-bar {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .section-title-bar::before {
+    content: '';
+    display: inline-block;
+    width: 3.5px;
+    height: 1.05em;
+    border-radius: 3px;
+    flex-shrink: 0;
+    background: linear-gradient(180deg, #6d28d9, #a78bfa);
+    box-shadow: 0 0 14px rgba(109,40,217,0.75);
+  }
+}
+
+/* ─── Keyframes ──────────────────────────────────────────── */
+@keyframes shimmer {
+  from { background-position: 200% 0; }
+  to   { background-position: -200% 0; }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes rowIn {
+  from { opacity: 0; transform: translateX(-14px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-100%); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes heartPulse {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.45); }
+  70%  { transform: scale(0.85); }
+  100% { transform: scale(1); }
+}
+@keyframes paletteIn {
+  from { opacity: 0; transform: translateY(-16px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes imgFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}

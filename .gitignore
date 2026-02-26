@@ -1,0 +1,21 @@
+# Next.js
+.next/
+out/
+build/
+
+# Deps
+node_modules/
+
+# Env files — NEVER commit these
+.env.local
+.env.*.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
